@@ -18,7 +18,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.onGenerateRoute,
       theme: ThemeData(
-        primaryColor: const Color(0xFF4D148C),
+        primarySwatch: Colors.indigo,
       ),
       home: BlocProvider(
         create: (context) => getIt<BottomNavCubit>(),
