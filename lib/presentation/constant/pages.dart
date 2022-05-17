@@ -7,4 +7,8 @@ class AppPages {
     const HomePage(),
     const FavoritePage(),
   ];
+  static List<String> titles = [
+    "Home",
+    "Favorite",
+  ];
 }

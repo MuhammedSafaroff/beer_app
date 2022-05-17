@@ -11,6 +11,9 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<BottomNavCubit, int>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            title: Text(AppPages.titles[state]),
+          ),
           body: AppPages.pages[state],
           bottomNavigationBar: BottomNavigationBar(
             items: const [
