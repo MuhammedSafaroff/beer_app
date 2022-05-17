@@ -1,4 +1,5 @@
 import 'package:beer_app/presentation/blocs/bottom_nav/bottom_nav_cubit.dart';
+import 'package:beer_app/presentation/constant/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,7 @@ class MainPage extends StatelessWidget {
     return BlocBuilder<BottomNavCubit, int>(
       builder: (context, state) {
         return Scaffold(
-          body: Container(),
+          body: AppPages.pages[state],
           bottomNavigationBar: BottomNavigationBar(
             items: const [
               BottomNavigationBarItem(
