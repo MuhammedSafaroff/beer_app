@@ -14,7 +14,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Garanti',
+      title: 'Beer App',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.onGenerateRoute,
       theme: ThemeData(

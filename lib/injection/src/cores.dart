@@ -5,5 +5,7 @@ import '../../core/network/app_interceptor.dart';
 final getIt = GetIt.instance;
 
 Future<void> init() async {
-  getIt.registerLazySingleton(() => AppInterceptor(localDataSource: getIt()));
+  getIt.registerLazySingleton(
+    () => AppInterceptor(localDataSource: getIt()),
+  );
 }
