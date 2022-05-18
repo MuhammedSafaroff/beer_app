@@ -40,7 +40,6 @@ class BeersCubit extends Cubit<BookingsState> {
 
     if ((state.data!.length % 10) == 0) {
       _currentPage++;
-      print(_currentPage);
     } else {
       emit(state.copyWith(hasReachedToEnd: true, isSuccess: true));
       return;

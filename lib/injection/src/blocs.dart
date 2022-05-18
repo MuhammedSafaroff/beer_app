@@ -7,6 +7,7 @@ final getIt = GetIt.instance;
 
 Future<void> init() async {
   getIt.registerFactory(() => BottomNavCubit());
+
   getIt.registerFactory(
     () => BeersCubit(
       getBeers: getIt(),

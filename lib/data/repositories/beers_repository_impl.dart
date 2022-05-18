@@ -22,7 +22,6 @@ class BeersRepositoryImpl implements BeersRepository {
         return const Error(Failure.network());
       }
     } catch (e) {
-      print(e.toString());
       return const Error(Failure.other());
     }
   }
