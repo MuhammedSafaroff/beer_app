@@ -1,21 +1,19 @@
+import 'package:beer_app/domain/entities/beers.dart';
+import 'package:beer_app/presentation/blocs/beers/beers_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeItem extends StatefulWidget {
-  HomeItem({
+  const HomeItem({
     Key? key,
-    required this.image,
-    required this.name,
-    required this.abv,
-    required this.id,
-    required this.isFavorite,
+    required this.item,
     this.onTap,
+    this.isVisible = true,
   }) : super(key: key);
-  final int id;
-  final String image;
-  final String name;
-  final String abv;
-  bool isFavorite;
+  final Beers item;
+
   final void Function()? onTap;
+  final bool isVisible;
 
   @override
   State<HomeItem> createState() => _HomeItemState();
@@ -48,14 +46,14 @@ class _HomeItemState extends State<HomeItem> {
                     Expanded(
                       flex: 4,
                       child: Image.network(
-                        widget.image,
+                        widget.item.imageUrl!,
                       ),
                     ),
                     const SizedBox(height: 10),
                     Flexible(
                       flex: 1,
                       child: Text(
-                        widget.name,
+                        widget.item.name!,
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
@@ -65,7 +63,7 @@ class _HomeItemState extends State<HomeItem> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.abv,
+                      widget.item.abv.toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -73,22 +71,36 @@ class _HomeItemState extends State<HomeItem> {
                     ),
                   ],
                 ),
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    child: StatefulBuilder(
-                      builder: (context, setState) => IconButton(
-                        onPressed: () {
-                          setState(
-                            () => widget.isFavorite = !widget.isFavorite,
-                          );
-                        },
-                        icon: Icon(
-                          widget.isFavorite ? Icons.favorite_sharp : Icons.favorite_border,
-                          color: Colors.red,
+                if (widget.isVisible)
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: StatefulBuilder(
+                        builder: (context, setState) => IconButton(
+                          onPressed: () {
+                            if (widget.item.isFavorite!) {
+                              context
+                                  .read<BeersCubit>()
+                                  .removeFavorite(widget.item);
+                            } else {
+                              context
+                                  .read<BeersCubit>()
+                                  .addFavorite(widget.item);
+                            }
+
+                            setState(
+                              () => widget.item.isFavorite =
+                                  !widget.item.isFavorite!,
+                            );
+                          },
+                          icon: Icon(
+                            widget.item.isFavorite!
+                                ? Icons.favorite_sharp
+                                : Icons.favorite_border,
+                            color: Colors.red,
+                          ),
                         ),
-                      ),
-                    ))
+                      ))
               ],
             ),
           ),

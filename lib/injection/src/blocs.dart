@@ -9,8 +9,6 @@ Future<void> init() async {
   getIt.registerFactory(() => BottomNavCubit());
 
   getIt.registerFactory(
-    () => BeersCubit(
-      getBeers: getIt(),
-    ),
+    () => BeersCubit(getBeers: getIt(), localDataSource: getIt()),
   );
 }

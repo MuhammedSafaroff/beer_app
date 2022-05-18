@@ -62,7 +62,8 @@ class _HomePageState extends State<HomePage> {
             return CustomScrollView(
               controller: scrollController
                 ..addListener(() async {
-                  if (scrollController.offset >= scrollController.position.maxScrollExtent) {
+                  if (scrollController.offset >=
+                      scrollController.position.maxScrollExtent) {
                     await context.read<BeersCubit>().fetchBeersPagination();
                   }
                 }),
@@ -71,11 +72,7 @@ class _HomePageState extends State<HomePage> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     Beers beers = state.data![index];
                     return HomeItem(
-                      isFavorite: state.data![index].isFavorite!,
-                      id: state.data![index].id!,
-                      image: beers.imageUrl!,
-                      name: beers.name!,
-                      abv: beers.abv.toString(),
+                      item: beers,
                       onTap: () {
                         Navigator.pushNamed(
                           context,
