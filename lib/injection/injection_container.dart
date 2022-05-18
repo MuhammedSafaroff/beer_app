@@ -7,10 +7,10 @@ import 'src/repositories.dart' as repositories;
 import 'src/use_cases.dart' as use_cases;
 
 Future<void> init(Environment environment) async {
-  await blocs.init();
-  await repositories.init();
   await data_sources.init();
   await cores.init();
   await externals.init(environment);
+  await repositories.init();
   await use_cases.init();
+  await blocs.init();
 }

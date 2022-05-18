@@ -15,7 +15,7 @@ abstract class Either<E, S> {
 
   bool isSuccess();
 
-  void when({
+  Future<void> when({
     required OnError<E> error,
     required OnSuccess<S> success,
   });
@@ -40,10 +40,10 @@ class Success<E, S> implements Either<E, S> {
   S? getSuccess() => _success;
 
   @override
-  void when({
+  Future<void> when({
     required OnError<E> error,
     required OnSuccess<S> success,
-  }) {
+  }) async {
     success(_success);
   }
 
@@ -74,10 +74,10 @@ class Error<E, S> implements Either<E, S> {
   S? getSuccess() => null;
 
   @override
-  void when({
+  Future<void> when({
     required OnError<E> error,
     required OnSuccess<S> success,
-  }) {
+  }) async {
     error(_error);
   }
 

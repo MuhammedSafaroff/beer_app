@@ -5,12 +5,17 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../core/constants/endpoints.dart';
 import '../../core/network/app_interceptor.dart';
+import '../../data/data_source/local/preferences_local_data_source.dart';
 import '../../main_common.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> init(Environment environment) async {
   getIt.registerLazySingleton(() => const FlutterSecureStorage());
+
+  getIt.registerLazySingleton<PreferencesLocalDataSource>(
+    () => PreferencesLocalDataSourceImpl(getIt()),
+  );
 
   getIt.registerLazySingleton(
     () => Dio()
@@ -36,9 +41,9 @@ Future<void> init(Environment environment) async {
       ]),
   );
 
-  // getIt.get<Dio>()
-  //   ..options
-  //   ..interceptors.add(
-  //     getIt.get<AppInterceptor>(),
-  //   );
+  getIt.get<Dio>()
+    ..options
+    ..interceptors.add(
+      getIt.get<AppInterceptor>(),
+    );
 }
