@@ -8,6 +8,7 @@ class HomeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final beers = ModalRoute.of(context)?.settings.arguments as Beers;
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home Details"),
@@ -17,58 +18,59 @@ class HomeDetails extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(alignment: Alignment.bottomCenter, child: Image.network(beers.imageUrl!, width: width / 2, height: height / 3)),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.network(
-                    beers.imageUrl!,
-                    width: width / 2,
+                  Text(
+                    "Name: " + beers.name! + ",",
+                    style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.red),
                   ),
-                  const SizedBox(width: 20),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          beers.name!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          beers.abv.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.indigo,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          beers.tagline!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    "ABV:" + beers.abv.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: Colors.red,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 5),
               Text(
-                "Description",
+                "food pairings:".toUpperCase(),
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                   color: Colors.grey[600],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              Text(
+                beers.foodPairing!.join(". \n"),
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: Colors.blue,
+                ),
+              ),
+              const SizedBox(height: 40),
+              Text(
+                "Description:".toUpperCase(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 10),
               Text(
                 beers.description!,
                 style: const TextStyle(

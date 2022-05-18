@@ -1,7 +1,7 @@
 import '../../../domain/entities/beers.dart';
 
 class BeersModel extends Beers {
-  const BeersModel({
+  BeersModel({
     int? id,
     String? name,
     String? tagline,
@@ -77,8 +77,7 @@ class BoilVolumeModel extends BoilVolume {
     String? unit,
   }) : super(value: value, unit: unit);
 
-  factory BoilVolumeModel.fromJson(Map<String, dynamic> json) =>
-      BoilVolumeModel(
+  factory BoilVolumeModel.fromJson(Map<String, dynamic> json) => BoilVolumeModel(
         value: json["value"],
         unit: json["unit"],
       );
@@ -95,12 +94,9 @@ class IngredientsModel extends Ingredients {
           yeast: yeast,
         );
 
-  factory IngredientsModel.fromJson(Map<String, dynamic> json) =>
-      IngredientsModel(
-        malt: List<MaltModel>.from(
-            json["malt"].map((x) => MaltModel.fromJson(x))),
-        hops:
-            List<HopModel>.from(json["hops"].map((x) => HopModel.fromJson(x))),
+  factory IngredientsModel.fromJson(Map<String, dynamic> json) => IngredientsModel(
+        malt: List<MaltModel>.from(json["malt"].map((x) => MaltModel.fromJson(x))),
+        hops: List<HopModel>.from(json["hops"].map((x) => HopModel.fromJson(x))),
         yeast: json["yeast"],
       );
 }
@@ -150,8 +146,7 @@ class MethodModel extends Method {
         );
 
   factory MethodModel.fromJson(Map<String, dynamic> json) => MethodModel(
-        mashTemp: List<MashTempModel>.from(
-            json["mash_temp"].map((x) => MashTempModel.fromJson(x))),
+        mashTemp: List<MashTempModel>.from(json["mash_temp"].map((x) => MashTempModel.fromJson(x))),
         fermentation: FermentationModel.fromJson(json["fermentation"]),
         twist: json["twist"],
       );
@@ -162,8 +157,7 @@ class FermentationModel extends Fermentation {
     BoilVolumeModel? temp,
   }) : super(temp: temp);
 
-  factory FermentationModel.fromJson(Map<String, dynamic> json) =>
-      FermentationModel(
+  factory FermentationModel.fromJson(Map<String, dynamic> json) => FermentationModel(
         temp: BoilVolumeModel.fromJson(json["temp"]),
       );
 }

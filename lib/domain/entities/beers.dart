@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Beers extends Equatable {
-  const Beers({
+  Beers({
     this.id,
     this.name,
     this.tagline,
@@ -23,6 +23,7 @@ class Beers extends Equatable {
     this.foodPairing,
     this.brewersTips,
     this.contributedBy,
+    this.isFavorite = false,
   });
 
   final int? id;
@@ -46,6 +47,7 @@ class Beers extends Equatable {
   final List<String>? foodPairing;
   final String? brewersTips;
   final String? contributedBy;
+  bool? isFavorite;
 
   @override
   List<Object?> get props => [

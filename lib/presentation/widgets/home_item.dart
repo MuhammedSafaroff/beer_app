@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
-class HomeItem extends StatelessWidget {
-  const HomeItem({
+class HomeItem extends StatefulWidget {
+  HomeItem({
     Key? key,
     required this.image,
     required this.name,
     required this.abv,
+    required this.id,
+    required this.isFavorite,
     this.onTap,
   }) : super(key: key);
+  final int id;
   final String image;
   final String name;
   final String abv;
+  bool isFavorite;
   final void Function()? onTap;
 
+  @override
+  State<HomeItem> createState() => _HomeItemState();
+}
+
+class _HomeItemState extends State<HomeItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,7 +34,7 @@ class HomeItem extends StatelessWidget {
         shadowColor: Colors.black.withOpacity(0.15),
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
-          onTap: onTap,
+          onTap: widget.onTap,
           child: Container(
             height: 300,
             width: double.infinity,
@@ -39,14 +48,14 @@ class HomeItem extends StatelessWidget {
                     Expanded(
                       flex: 4,
                       child: Image.network(
-                        image,
+                        widget.image,
                       ),
                     ),
                     const SizedBox(height: 10),
                     Flexible(
                       flex: 1,
                       child: Text(
-                        name,
+                        widget.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
@@ -56,7 +65,7 @@ class HomeItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      abv,
+                      widget.abv,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -65,16 +74,21 @@ class HomeItem extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  top: 0,
-                  right: 0,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_border,
-                      color: Colors.red,
-                    ),
-                  ),
-                )
+                    top: 0,
+                    right: 0,
+                    child: StatefulBuilder(
+                      builder: (context, setState) => IconButton(
+                        onPressed: () {
+                          setState(
+                            () => widget.isFavorite = !widget.isFavorite,
+                          );
+                        },
+                        icon: Icon(
+                          widget.isFavorite ? Icons.favorite_sharp : Icons.favorite_border,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),
