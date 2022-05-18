@@ -18,6 +18,14 @@ class FavoritePage extends StatelessWidget {
           future: getIt<PreferencesLocalDataSource>().favorites,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              if (snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "Empty",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                );
+              }
               return GridView.builder(
                 itemBuilder: (context, index) {
                   Beers beers = snapshot.data![index];
