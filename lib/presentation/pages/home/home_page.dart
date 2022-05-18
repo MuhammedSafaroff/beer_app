@@ -1,11 +1,11 @@
 import 'package:beer_app/core/bloc/pagination_state.dart';
-import 'package:beer_app/core/constants/routes.dart';
 import 'package:beer_app/presentation/blocs/beers/beers_cubit.dart';
 import 'package:beer_app/presentation/widgets/home_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/constants/routes.dart';
 import '../../../domain/entities/beers.dart';
 
 class HomePage extends StatefulWidget {
@@ -62,8 +62,7 @@ class _HomePageState extends State<HomePage> {
             return CustomScrollView(
               controller: scrollController
                 ..addListener(() async {
-                  if (scrollController.offset >=
-                      scrollController.position.maxScrollExtent) {
+                  if (scrollController.offset >= scrollController.position.maxScrollExtent) {
                     await context.read<BeersCubit>().fetchBeersPagination();
                   }
                 }),
@@ -72,14 +71,18 @@ class _HomePageState extends State<HomePage> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     Beers beers = state.data![index];
                     return HomeItem(
+                      isFavorite: state.data![index].isFavorite!,
+                      id: state.data![index].id!,
                       image: beers.imageUrl!,
                       name: beers.name!,
                       abv: beers.abv.toString(),
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        AppRoutes.homeDetails,
-                        arguments: beers,
-                      ),
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.homeDetails,
+                          arguments: beers,
+                        );
+                      },
                     );
                   }, childCount: state.data!.length),
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
