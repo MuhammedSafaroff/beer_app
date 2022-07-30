@@ -73,6 +73,46 @@ class Beers extends Equatable {
         brewersTips,
         contributedBy,
       ];
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "tagline": tagline,
+        "first_brewed": firstBrewed,
+        "description": description,
+        "image_url": imageUrl,
+        "abv": abv,
+        "ibu": ibu,
+        "target_fg": targetFg,
+        "target_og": targetOg,
+        "ebc": ebc,
+        "srm": srm,
+        "ph": ph,
+        "attenuation_level": attenuationLevel,
+        "food_pairing": List<dynamic>.from(foodPairing!.map((x) => x)),
+        "brewers_tips": brewersTips,
+        "contributed_by": contributedBy,
+      };
+
+  factory Beers.fromJson(Map<String, dynamic> json) => Beers(
+        id: json["id"],
+        name: json["name"],
+        tagline: json["tagline"],
+        firstBrewed: json["first_brewed"],
+        description: json["description"],
+        imageUrl: json["image_url"],
+        abv: json["abv"],
+        ibu: json["ibu"],
+        targetFg: json["target_fg"],
+        targetOg: json["target_og"],
+        ebc: json["ebc"],
+        srm: json["srm"],
+        ph: json["ph"],
+        attenuationLevel: json["attenuation_level"],
+        foodPairing: List<String>.from(json["food_pairing"].map((x) => x)),
+        brewersTips: json["brewers_tips"],
+        contributedBy: json["contributed_by"],
+      );
 }
 
 class BoilVolume extends Equatable {

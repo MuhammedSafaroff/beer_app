@@ -12,7 +12,7 @@ class AppRouter {
       case AppRoutes.homeDetails:
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => HomeDetails(),
+          builder: (context) => const HomeDetails(),
         );
 
       default:

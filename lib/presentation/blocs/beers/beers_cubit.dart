@@ -1,14 +1,22 @@
 import 'package:beer_app/core/bloc/pagination_state.dart';
+import 'package:beer_app/data/repositories/beers_repository_impl.dart';
 import 'package:beer_app/domain/entities/beers.dart';
+import 'package:beer_app/domain/repositories/beers_repository.dart';
 import 'package:beer_app/domain/use_cases/get_beers.dart';
 import 'package:bloc/bloc.dart';
+
+import '../../../data/data_source/local/preferences_local_data_source.dart';
 
 typedef BookingsState = PaginationState<List<Beers>, String>;
 
 class BeersCubit extends Cubit<BookingsState> {
-  BeersCubit({required this.getBeers}) : super(const PaginationState(data: []));
+  BeersCubit({required this.localDataSource, required this.getBeers})
+      : super(
+          const PaginationState(data: []),
+        );
 
   final GetBeers getBeers;
+  final PreferencesLocalDataSource localDataSource;
   int _currentPage = 0;
   bool isBusy = false;
 
@@ -20,14 +28,33 @@ class BeersCubit extends Cubit<BookingsState> {
 
     await result.when(
       error: (_) => emit(state.copyWith(isFailure: true)),
-      success: (result) {
+      success: (result) async {
         if (result.isEmpty) {
           emit(state.copyWith(isSuccess: true, isEmpty: true));
         } else {
-          emit(state.copyWith(isSuccess: true, data: result));
+          List<Beers> favorites = await localDataSource.favorites;
+
+          List<Beers> response = [...result];
+          for (var fav in favorites) {
+            for (var element in response) {
+              if (fav.id == element.id) {
+                element.isFavorite = true;
+              }
+            }
+          }
+
+          emit(state.copyWith(isSuccess: true, data: response));
         }
       },
     );
+  }
+
+  Future<void> addFavorite(Beers item) async {
+    await localDataSource.addFavorite(item);
+  }
+
+  Future<void> removeFavorite(Beers item) async {
+    await localDataSource.removeFavorite(item);
   }
 
   Future<void> fetchBeersPagination() async {
@@ -51,10 +78,21 @@ class BeersCubit extends Cubit<BookingsState> {
       error: (_) {
         emit(state.copyWith(isFailure: true));
       },
-      success: (result) {
+      success: (result) async {
+        List<Beers> favorites = await localDataSource.favorites;
+
+        List<Beers> response = [...result];
+        for (var fav in favorites) {
+          for (var element in response) {
+            if (fav.id == element.id) {
+              element.isFavorite = true;
+            }
+          }
+        }
+
         List<Beers> last = [...state.data!];
 
-        last.addAll(result);
+        last.addAll(response);
 
         emit(state.copyWith(isSuccess: true, data: last));
       },
