@@ -1,5 +1,7 @@
 import 'package:beer_app/core/bloc/pagination_state.dart';
+import 'package:beer_app/data/repositories/beers_repository_impl.dart';
 import 'package:beer_app/domain/entities/beers.dart';
+import 'package:beer_app/domain/repositories/beers_repository.dart';
 import 'package:beer_app/domain/use_cases/get_beers.dart';
 import 'package:bloc/bloc.dart';
 

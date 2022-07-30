@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/constants/keys.dart';
 import '../../../core/error/exceptions.dart';
-import '../../models/response/beers_model.dart';
 
 abstract class PreferencesLocalDataSource {
   Future<void> persistToken(String token);
